@@ -1,24 +1,30 @@
-document.addEventListener("grist-data-loaded", () => {
+document.addEventListener("recordsLoaded", () => {
 
-    console.log(window.gristData);
+    const zone = document.getElementById("timeline");
 
-    const timeline = document.getElementById("timeline");
+    zone.innerHTML = "";
 
-    timeline.innerHTML = "";
+    const titre = document.createElement("h2");
 
-    window.gristData.forEach(aap => {
+    titre.textContent = `${window.gristRecords.length} appel(s) trouvé(s)`;
 
-        const ligne = document.createElement("div");
+    zone.appendChild(titre);
 
-        ligne.className = "ligne";
+    const ul = document.createElement("ul");
 
-        ligne.innerHTML = `
-            <strong>${aap.nom_appel}</strong><br>
-            ${aap.date_ouverture_phase1}
-        `;
+    window.gristRecords.forEach(record => {
 
-        timeline.appendChild(ligne);
+        const li = document.createElement("li");
+
+        li.textContent =
+            `${record.nom_appel}
+             (${record.financeur})
+             - ${record.date_ouverture_phase1}`;
+
+        ul.appendChild(li);
 
     });
+
+    zone.appendChild(ul);
 
 });
