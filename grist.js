@@ -1,23 +1,20 @@
 // grist.js
 
-// Les données reçues depuis Grist seront stockées ici.
-window.gristData = [];
+window.gristRecords = [];
 
-// Le widget est prêt à recevoir des données.
 grist.ready({
-  requiredAccess: 'read table'
+  requiredAccess: "read table"
 });
 
-// À chaque modification de la table, Grist renvoie les enregistrements.
 grist.onRecords((records) => {
 
-  console.log("Nombre d'enregistrements :", records.length);
+  console.log("=== Données Grist reçues ===");
+  console.table(records);
 
-  window.gristData = records;
+  window.gristRecords = records;
 
-  // Prévient script.js que les données sont disponibles.
   document.dispatchEvent(
-    new CustomEvent("grist-data-loaded")
+    new CustomEvent("recordsLoaded")
   );
 
 });
