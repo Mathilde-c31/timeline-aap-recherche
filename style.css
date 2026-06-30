@@ -276,3 +276,37 @@ footer {
     border-bottom:1px solid #eee;
 
 }
+
+.timeline-row{
+
+    position:relative;
+
+    height:34px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.timeline-bar{
+
+    position:absolute;
+
+    top:7px;
+
+    height:20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+}
+
+.timeline-bar:hover{
+
+    transform:scaleY(1.15);
+
+    filter:brightness(1.05);
+
+}
