@@ -94,6 +94,9 @@ grist.onRecords(function(records) {
 
   console.log("✅ onRecords appelé");
 
+console.log(records);
+console.table(records);
+
   console.log(records);
 
   window.aapData = prepare(records);
