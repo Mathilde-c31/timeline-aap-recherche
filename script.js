@@ -92,24 +92,54 @@ class TimelineAAP {
 
     }
 
-    render(){
+    render() {
 
-        this.clear();
+    this.clear();
 
-        if(this.loading){
-
-            this.loading.style.display="none";
-
-        }
-
-        /*
-         les méthodes de dessin
-         seront ajoutées dans la partie 2
-        */
-
-        console.log("Timeline prête.");
-
+    if (this.loading) {
+        this.loading.style.display = "none";
     }
+
+    // Conteneur principal
+    const wrapper = document.createElement("div");
+    wrapper.className = "timeline-wrapper";
+
+    // Colonne de gauche
+    const left = document.createElement("div");
+    left.className = "timeline-left";
+
+    // Zone de droite
+    const right = document.createElement("div");
+    right.className = "timeline-right";
+
+    // Une ligne par AAP
+    this.records.forEach(record => {
+
+        // Colonne gauche
+        const label = document.createElement("div");
+        label.className = "timeline-label";
+
+        label.innerHTML =
+            `<strong>${record.financeur}</strong> │ ${record.nom}`;
+
+        left.appendChild(label);
+
+        // Colonne droite (vide pour l'instant)
+        const row = document.createElement("div");
+        row.className = "timeline-row";
+
+        right.appendChild(row);
+
+    });
+
+    wrapper.appendChild(left);
+    wrapper.appendChild(right);
+
+    this.container.appendChild(wrapper);
+
+    console.log("Timeline affichée");
+
+}
 
 }
 
