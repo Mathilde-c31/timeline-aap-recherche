@@ -82,6 +82,28 @@ class TimelineAAP {
 
     }
 
+ /**
+ * Largeur de la timeline
+ */
+getTimelineWidth() {
+
+    return this.dateToX(this.maxDate) + 100;
+
+}
+
+/**
+ * Durée entre deux dates
+ */
+durationToWidth(start, end) {
+
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    const days = (end - start) / oneDay;
+
+    return Math.max(days * this.pixelsPerDay, 4);
+
+}
+
     /**
      * Nettoyage de la zone graphique
      */
@@ -126,9 +148,41 @@ class TimelineAAP {
 
         // Colonne droite (vide pour l'instant)
         const row = document.createElement("div");
-        row.className = "timeline-row";
+row.className = "timeline-row";
 
-        right.appendChild(row);
+row.style.width = this.getTimelineWidth() + "px";
+
+// Création de la barre
+const bar = document.createElement("div");
+bar.className = "timeline-bar";
+
+bar.style.left =
+    this.dateToX(record.ouverture1) + "px";
+
+bar.style.width =
+    this.durationToWidth(
+        record.ouverture1,
+        record.fermeture1
+    ) + "px";
+
+bar.style.background = record.couleur;
+
+bar.title =
+    record.nom;
+
+bar.onclick = () => {
+
+    if(record.lien){
+
+        window.open(record.lien,"_blank");
+
+    }
+
+};
+
+row.appendChild(bar);
+
+right.appendChild(row);
 
     });
 
