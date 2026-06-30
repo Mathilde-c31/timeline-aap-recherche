@@ -1,50 +1,75 @@
-<!-- API officielle Grist -->
-<script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
-
-<!-- vis-timeline -->
-<link
-  href="https://unpkg.com/vis-timeline@7.7.3/styles/vis-timeline-graph2d.min.css"
-  rel="stylesheet">
-
-<script src="https://unpkg.com/vis-data@7.1.6/peer/umd/vis-data.min.js"></script>
-<script src="https://unpkg.com/vis-timeline@7.7.3/peer/umd/vis-timeline-graph2d.min.js"></script>
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
 
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Timeline AAP Recherche</title>
+  <title>Timeline AAP Recherche</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- SDK officiel Grist -->
+  <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
 
-    <link rel="stylesheet" href="style.css">
+  <!-- Apache ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
-    <!-- API officielle des widgets Grist -->
-    <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
-
-    <!-- Timeline -->
-    <link
-        href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css"
-        rel="stylesheet">
+  <!-- Feuille de style -->
+  <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<header>
+<div id="app">
 
-    <h1>📅 Timeline des appels à projets de recherche</h1>
+  <header>
 
-</header>
+    <div class="title">
 
-<main>
+      <h1>📅 Timeline des appels à projets</h1>
+
+      <p>
+        Visualisation chronologique des périodes de candidature
+      </p>
+
+    </div>
+
+    <div class="toolbar">
+
+      <input
+        id="search"
+        type="text"
+        placeholder="Rechercher un appel..."
+      >
+
+      <button id="resetZoom">
+        Réinitialiser le zoom
+      </button>
+
+    </div>
+
+  </header>
+
+  <main>
+
+    <div id="loading">
+
+      Chargement des données Grist...
+
+    </div>
 
     <div id="timeline"></div>
 
-</main>
+  </main>
+
+  <footer>
+
+    timeline-aap-recherche — Version 0.1
+
+  </footer>
+
+</div>
 
 <script src="grist.js"></script>
 <script src="script.js"></script>
