@@ -1,117 +1,107 @@
 /*
 ==========================================================
- Timeline AAP Recherche
- grist.js
+Timeline AAP Recherche
+grist.js
 ==========================================================
 */
+
+console.log("✅ grist.js chargé");
 
 window.aapData = [];
 
 /**
- * Convertit une date Grist en objet Date.
- * Accepte :
- *  - Date JavaScript
- *  - "15-09-2025"
- *  - "2025-09-15"
+ * Convertit une valeur Grist en Date JavaScript
  */
 function parseDate(value) {
 
-    if (!value) return null;
+  if (!value) return null;
 
-    if (value instanceof Date) {
-        return value;
+  // Déjà un objet Date
+  if (value instanceof Date) {
+    return value;
+  }
+
+  // Timestamp
+  if (typeof value === "number") {
+    return new Date(value * 1000);
+  }
+
+  // Chaîne
+  if (typeof value === "string") {
+
+    // ISO
+    if (/^\d{4}-\d{2}-\d{2}/.test(value)) {
+      return new Date(value);
     }
 
-    if (typeof value !== "string") {
-        return null;
+    // JJ-MM-AAAA
+    const p = value.split("-");
+
+    if (p.length === 3) {
+      return new Date(
+        Number(p[2]),
+        Number(p[1]) - 1,
+        Number(p[0])
+      );
     }
+  }
 
-    // format ISO
-    if (value.includes("-") && value.substring(0,4).match(/^\d{4}$/)) {
-        return new Date(value);
-    }
+  return null;
+}
 
-    // format JJ-MM-AAAA
-    const parts = value.split("-");
+/**
+ * Préparation des données
+ */
+function prepare(records) {
 
-    if (parts.length !== 3) {
-        return null;
-    }
+  return records.map(r => ({
 
-    const day = parseInt(parts[0],10);
-    const month = parseInt(parts[1],10)-1;
-    const year = parseInt(parts[2],10);
+    id: r.id,
 
-    return new Date(year,month,day);
+    nom: r.nom_appel,
+
+    financeur: r.financeur,
+
+    couleur: r.couleur_financeur || "#1976d2",
+
+    annee: r.annee_appel,
+
+    ouverture1: parseDate(r.date_ouverture_phase1),
+
+    fermeture1: parseDate(r.date_fermeture_phase1),
+
+    ouverture2: parseDate(r.date_ouverture_phase2),
+
+    fermeture2: parseDate(r.date_fermeture_phase2),
+
+    resultat1: parseDate(r.date_resultats_phase1),
+
+    resultat2: parseDate(r.date_resultats_phase2),
+
+    lien: r.lien_AAP,
+
+    enCours: r.AAP_en_cours
+
+  }));
 
 }
 
+grist.ready();
 
-/**
- * Prépare les données pour la timeline
- */
-function prepareRecords(records){
+console.log("✅ grist.ready() exécuté");
 
-    return records.map(r => ({
+grist.onRecords(function(records) {
 
-        id : r.id,
+  console.log("✅ onRecords appelé");
 
-        nom : r.nom_appel,
+  console.log(records);
 
-        financeur : r.financeur,
+  window.aapData = prepare(records);
 
-        couleur : r.couleur_financeur || "#4CAF50",
+  console.table(window.aapData);
 
-        annee : r.annee_appel,
-
-        phase1Debut : parseDate(r.date_ouverture_phase1),
-
-        phase1Fin : parseDate(r.date_fermeture_phase1),
-
-        phase2Debut : parseDate(r.date_ouverture_phase2),
-
-        phase2Fin : parseDate(r.date_fermeture_phase2),
-
-        resultat1 : parseDate(r.date_resultats_phase1),
-
-        resultat2 : parseDate(r.date_resultats_phase2),
-
-        lien : r.lien_AAP,
-
-        enCours : r.AAP_en_cours
-
-    }));
-
-}
-
-
-/**
- * Initialisation du widget
- */
-
-grist.ready({
-
-    requiredAccess: "read table"
-
-});
-
-
-/**
- * Réception des données
- */
-
-grist.onRecords(records => {
-
-    console.log("Records reçus :",records.length);
-
-    window.aapData = prepareRecords(records);
-
-    console.table(window.aapData);
-
-    document.dispatchEvent(
-
-        new CustomEvent("aap-data-loaded")
-
-    );
+  document.dispatchEvent(
+    new CustomEvent("aap-data-loaded")
+  );
 
 });
