@@ -162,6 +162,155 @@ class TimelineAAP {
 
     }
 
+     /*
+    ==========================================
+    Axe des mois
+    ==========================================
+    */
+
+    renderHeader(right){
+
+        const header=document.createElement("div");
+
+        header.className="timeline-header";
+        header.style.width=this.timelineWidth()+"px";
+
+        const months=[
+            "Jan","Fév","Mar","Avr","Mai","Juin",
+            "Juil","Août","Sept","Oct","Nov","Déc"
+        ];
+
+        let current=new Date(
+            this.minDate.getFullYear(),
+            this.minDate.getMonth(),
+            1
+        );
+
+        while(current<=this.maxDate){
+
+            const x=this.dateToX(current);
+
+            const month=document.createElement("div");
+
+            month.className="timeline-month";
+
+            month.style.left=x+"px";
+
+            month.innerHTML=
+                `<strong>${months[current.getMonth()]}</strong><br>${current.getFullYear()}`;
+
+            header.appendChild(month);
+
+            current.setMonth(current.getMonth()+1);
+
+        }
+
+        right.appendChild(header);
+
+    }
+
+    /*
+    ==========================================
+    Lignes
+    ==========================================
+    */
+
+    renderRows(right){
+
+        this.records.forEach(record=>{
+
+            const row=document.createElement("div");
+
+            row.className="timeline-row";
+
+            row.style.width=this.timelineWidth()+"px";
+
+            const bar=document.createElement("div");
+
+            bar.className="timeline-bar";
+
+            bar.style.left=
+                this.dateToX(record.ouverture1)+"px";
+
+            bar.style.width=
+                this.duration(
+                    record.ouverture1,
+                    record.fermeture1
+                )+"px";
+
+            bar.style.background=
+                record.couleur;
+
+            if(record.lien){
+
+                bar.style.cursor="pointer";
+
+                bar.onclick=()=>{
+
+                    window.open(record.lien,"_blank");
+
+                };
+
+            }
+
+            row.appendChild(bar);
+
+            right.appendChild(row);
+
+        });
+
+    }
+
+    /*
+    ==========================================
+    Aujourd'hui
+    ==========================================
+    */
+
+    renderToday(right){
+
+        const today=document.createElement("div");
+
+        today.className="today-line";
+
+        today.style.left=
+            this.dateToX(new Date())+"px";
+
+        right.appendChild(today);
+
+    }
+
+    /*
+    ==========================================
+    Grille mensuelle
+    ==========================================
+    */
+
+    renderGrid(right){
+
+        let current=new Date(
+            this.minDate.getFullYear(),
+            this.minDate.getMonth(),
+            1
+        );
+
+        while(current<=this.maxDate){
+
+            const line=document.createElement("div");
+
+            line.className="timeline-grid-line";
+
+            line.style.left=
+                this.dateToX(current)+"px";
+
+            right.appendChild(line);
+
+            current.setMonth(current.getMonth()+1);
+
+        }
+
+    }
+
     /*
     ==========================================
     Rendu principal
