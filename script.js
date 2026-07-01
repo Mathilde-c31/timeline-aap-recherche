@@ -104,6 +104,65 @@ durationToWidth(start, end) {
 
 }
 
+ /**
+ * Construit l'axe des mois
+ */
+renderHeader(parent) {
+
+    const header = document.createElement("div");
+    header.className = "timeline-header";
+
+    header.style.width = this.getTimelineWidth() + "px";
+
+    const current = new Date(
+        this.minDate.getFullYear(),
+        this.minDate.getMonth(),
+        1
+    );
+
+    const mois = [
+        "Jan","Fév","Mar","Avr","Mai","Juin",
+        "Juil","Août","Sept","Oct","Nov","Déc"
+    ];
+
+    while (current <= this.maxDate) {
+
+        const month = document.createElement("div");
+        month.className = "timeline-month";
+
+        const x = this.dateToX(current);
+
+        month.style.left = x + "px";
+
+        month.innerHTML =
+            `<strong>${mois[current.getMonth()]}</strong><br>${current.getFullYear()}`;
+
+        header.appendChild(month);
+
+        current.setMonth(current.getMonth() + 1);
+
+    }
+
+    parent.appendChild(header);
+
+}
+
+ /**
+ * Ligne verticale Aujourd'hui
+ */
+renderTodayLine(parent) {
+
+    const today = document.createElement("div");
+
+    today.className = "today-line";
+
+    today.style.left =
+        this.dateToX(new Date()) + "px";
+
+    parent.appendChild(today);
+
+}
+
     /**
      * Nettoyage de la zone graphique
      */
@@ -134,8 +193,24 @@ durationToWidth(start, end) {
     const right = document.createElement("div");
     right.className = "timeline-right";
 
+     // Axe des mois
+     this.renderHeader(right);
+
     // Une ligne par AAP
-    this.records.forEach(record => {
+  this.records.forEach(record => {
+
+    const row = document.createElement("div");
+    row.className = "timeline-row";
+
+    // ... création de la barre ...
+
+    right.appendChild(row);
+
+});
+     
+     // UNE SEULE ligne Aujourd'hui
+
+this.renderTodayLine(right);
 
         // Colonne gauche
         const label = document.createElement("div");
