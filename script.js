@@ -317,7 +317,7 @@ class TimelineAAP {
     ==========================================
     */
 
-    render(){
+       render(){
 
         this.clear();
 
@@ -331,11 +331,17 @@ class TimelineAAP {
 
         this.renderLabels(layout.left);
 
-        console.log("V0.1 - Partie 1 OK");
+        this.renderHeader(layout.right);
+
+        this.renderGrid(layout.right);
+
+        this.renderRows(layout.right);
+
+        this.renderToday(layout.right);
+
+        console.log("V0.1 - Partie 2 OK");
 
     }
-
-}
 
 /*
 ==========================================================
