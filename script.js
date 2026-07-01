@@ -19,20 +19,27 @@ class TimelineAAP {
         this.maxDate = null;
 
         this.pixelsPerDay = 4;
-
+        this.leftWidth = 320;
         this.rowHeight = 34;
-        this.leftColumnWidth = 320;
-
-        this.today = new Date();
 
     }
 
-    /**
-     * Chargement des données provenant de grist.js
-     */
-    load(records) {
+    /*
+    ==========================================
+    Chargement
+    ==========================================
+    */
+
+    load(records){
 
         this.records = records.filter(r => r.ouverture1 && r.fermeture1);
+
+        if(this.records.length===0){
+
+            this.container.innerHTML="<p>Aucune donnée.</p>";
+            return;
+
+        }
 
         this.computeBounds();
 
@@ -40,253 +47,160 @@ class TimelineAAP {
 
     }
 
-    /**
-     * Recherche de la première et dernière date
-     */
-    computeBounds() {
+    /*
+    ==========================================
+    Bornes de la timeline
+    ==========================================
+    */
 
-        const dates = [];
+    computeBounds(){
 
-        this.records.forEach(r => {
+        const dates=[];
+
+        this.records.forEach(r=>{
 
             dates.push(r.ouverture1);
             dates.push(r.fermeture1);
 
         });
 
-        this.minDate = new Date(Math.min(...dates));
+        this.minDate=new Date(Math.min(...dates));
+        this.maxDate=new Date(Math.max(...dates));
 
-        this.maxDate = new Date(Math.max(...dates));
-
-        /*
-         on ajoute une marge de 15 jours
-        */
-
-        this.minDate.setDate(this.minDate.getDate() - 15);
-
-        this.maxDate.setDate(this.maxDate.getDate() + 15);
+        this.minDate.setDate(this.minDate.getDate()-15);
+        this.maxDate.setDate(this.maxDate.getDate()+15);
 
     }
 
-    /**
-     * Conversion Date -> X
-     */
+    /*
+    ==========================================
+    Outils
+    ==========================================
+    */
 
     dateToX(date){
 
-        const oneDay = 1000*60*60*24;
+        const day=1000*60*60*24;
 
-        const delta = (date - this.minDate)/oneDay;
-
-        return delta * this.pixelsPerDay;
+        return ((date-this.minDate)/day)*this.pixelsPerDay;
 
     }
 
- /**
- * Largeur de la timeline
- */
-getTimelineWidth() {
+    duration(start,end){
 
-    return this.dateToX(this.maxDate) + 100;
+        const day=1000*60*60*24;
 
-}
-
-/**
- * Durée entre deux dates
- */
-durationToWidth(start, end) {
-
-    const oneDay = 1000 * 60 * 60 * 24;
-
-    const days = (end - start) / oneDay;
-
-    return Math.max(days * this.pixelsPerDay, 4);
-
-}
-
- /**
- * Construit l'axe des mois
- */
-renderHeader(parent) {
-
-    const header = document.createElement("div");
-    header.className = "timeline-header";
-
-    header.style.width = this.getTimelineWidth() + "px";
-
-    const current = new Date(
-        this.minDate.getFullYear(),
-        this.minDate.getMonth(),
-        1
-    );
-
-    const mois = [
-        "Jan","Fév","Mar","Avr","Mai","Juin",
-        "Juil","Août","Sept","Oct","Nov","Déc"
-    ];
-
-    while (current <= this.maxDate) {
-
-        const month = document.createElement("div");
-        month.className = "timeline-month";
-
-        const x = this.dateToX(current);
-
-        month.style.left = x + "px";
-
-        month.innerHTML =
-            `<strong>${mois[current.getMonth()]}</strong><br>${current.getFullYear()}`;
-
-        header.appendChild(month);
-
-        current.setMonth(current.getMonth() + 1);
+        return Math.max(
+            ((end-start)/day)*this.pixelsPerDay,
+            4
+        );
 
     }
 
-    parent.appendChild(header);
+    timelineWidth(){
 
-}
+        return this.dateToX(this.maxDate)+80;
 
- /**
- * Ligne verticale Aujourd'hui
- */
-renderTodayLine(parent) {
-
-    const today = document.createElement("div");
-
-    today.className = "today-line";
-
-    today.style.left =
-        this.dateToX(new Date()) + "px";
-
-    parent.appendChild(today);
-
-}
-
-    /**
-     * Nettoyage de la zone graphique
-     */
+    }
 
     clear(){
 
-        this.container.innerHTML = "";
+        this.container.innerHTML="";
 
     }
 
-    render() {
+    /*
+    ==========================================
+    Construction HTML
+    ==========================================
+    */
 
-    this.clear();
+    createLayout(){
 
-    if (this.loading) {
-        this.loading.style.display = "none";
-    }
+        const wrapper=document.createElement("div");
+        wrapper.className="timeline-wrapper";
 
-    // Conteneur principal
-    const wrapper = document.createElement("div");
-    wrapper.className = "timeline-wrapper";
+        const left=document.createElement("div");
+        left.className="timeline-left";
 
-    // Colonne de gauche
-    const left = document.createElement("div");
-    left.className = "timeline-left";
+        const right=document.createElement("div");
+        right.className="timeline-right";
 
-    // Zone de droite
-    const right = document.createElement("div");
-    right.className = "timeline-right";
+        wrapper.appendChild(left);
+        wrapper.appendChild(right);
 
-     // Axe des mois
-     this.renderHeader(right);
+        this.container.appendChild(wrapper);
 
-    // Une ligne par AAP
-  this.records.forEach(record => {
-
-    const row = document.createElement("div");
-    row.className = "timeline-row";
-
-    // ... création de la barre ...
-
-    right.appendChild(row);
-
-});
-     
-     // UNE SEULE ligne Aujourd'hui
-
-this.renderTodayLine(right);
-
-        // Colonne gauche
-        const label = document.createElement("div");
-        label.className = "timeline-label";
-
-        label.innerHTML =
-            `<strong>${record.financeur}</strong> │ ${record.nom}`;
-
-        left.appendChild(label);
-
-        // Colonne droite (vide pour l'instant)
-        const row = document.createElement("div");
-row.className = "timeline-row";
-
-row.style.width = this.getTimelineWidth() + "px";
-
-// Création de la barre
-const bar = document.createElement("div");
-bar.className = "timeline-bar";
-
-bar.style.left =
-    this.dateToX(record.ouverture1) + "px";
-
-bar.style.width =
-    this.durationToWidth(
-        record.ouverture1,
-        record.fermeture1
-    ) + "px";
-
-bar.style.background = record.couleur;
-
-bar.title =
-    record.nom;
-
-bar.onclick = () => {
-
-    if(record.lien){
-
-        window.open(record.lien,"_blank");
+        return {
+            wrapper,
+            left,
+            right
+        };
 
     }
 
-};
+    /*
+    ==========================================
+    Colonne de gauche
+    ==========================================
+    */
 
-row.appendChild(bar);
+    renderLabels(left){
 
-right.appendChild(row);
+        this.records.forEach(record=>{
 
-    });
+            const label=document.createElement("div");
 
-    wrapper.appendChild(left);
-    wrapper.appendChild(right);
+            label.className="timeline-label";
 
-    this.container.appendChild(wrapper);
+            label.innerHTML=
+                `<strong>${record.financeur}</strong><br>${record.nom}`;
 
-    console.log("Timeline affichée");
+            left.appendChild(label);
+
+        });
+
+    }
+
+    /*
+    ==========================================
+    Rendu principal
+    ==========================================
+    */
+
+    render(){
+
+        this.clear();
+
+        if(this.loading){
+
+            this.loading.style.display="none";
+
+        }
+
+        const layout=this.createLayout();
+
+        this.renderLabels(layout.left);
+
+        console.log("V0.1 - Partie 1 OK");
+
+    }
 
 }
-
-}
-
 
 /*
 ==========================================================
-Initialisation
+ Initialisation
 ==========================================================
 */
 
-const timeline = new TimelineAAP();
-
+const timeline=new TimelineAAP();
 
 document.addEventListener(
 
     "aap-data-loaded",
 
-    () => {
+    ()=>{
 
         timeline.load(window.aapData);
 
