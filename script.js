@@ -153,8 +153,8 @@ class TimelineAAP {
 
             label.className="timeline-label";
 
-            label.innerHTML=
-                `<strong>${record.financeur}</strong><br>${record.nom}`;
+            label.innerHTML =
+    `<strong>${record.nom}</strong> <span class="financeur">— ${record.financeur}</span>`;
 
             left.appendChild(label);
 
