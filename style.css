@@ -339,17 +339,25 @@ footer {
 
     position:absolute;
 
-    top:4px;
+    top:0;
 
-    transform:translateX(-50%);
+    bottom:0;
 
-    text-align:center;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-right:1px solid #ddd;
 
     font-size:12px;
 
+    font-weight:600;
+
     color:#555;
 
-    white-space:nowrap;
+    box-sizing:border-box;
 
 }
 
