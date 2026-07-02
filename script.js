@@ -123,19 +123,25 @@ class TimelineAAP {
         const left=document.createElement("div");
         left.className="timeline-left";
 
-        const right=document.createElement("div");
-        right.className="timeline-right";
+        const right = document.createElement("div");
+right.className = "timeline-right";
 
-        wrapper.appendChild(left);
-        wrapper.appendChild(right);
+const body = document.createElement("div");
+body.className = "timeline-body";
 
-        this.container.appendChild(wrapper);
+right.appendChild(body);
 
-        return {
-            wrapper,
-            left,
-            right
-        };
+wrapper.appendChild(left);
+wrapper.appendChild(right);
+
+this.container.appendChild(wrapper);
+
+return {
+    wrapper,
+    left,
+    right,
+    body
+};
 
     }
 
@@ -331,13 +337,13 @@ class TimelineAAP {
 
         this.renderLabels(layout.left);
 
-        this.renderHeader(layout.right);
+       this.renderHeader(layout.right);
 
-        this.renderGrid(layout.right);
+this.renderGrid(layout.body);
 
-        this.renderRows(layout.right);
+this.renderRows(layout.body);
 
-        this.renderToday(layout.right);
+this.renderToday(layout.body);
 
         console.log("V0.1 - Partie 2 OK");
 
