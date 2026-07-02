@@ -474,3 +474,13 @@ footer {
     pointer-events:none;
 
 }
+
+.timeline-body{
+
+    position:relative;
+
+    width:max-content;
+
+    min-height:100%;
+
+}
