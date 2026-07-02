@@ -176,44 +176,48 @@ return {
 
     renderHeader(right){
 
-        const header=document.createElement("div");
+    const header = document.createElement("div");
+    header.className = "timeline-header";
 
-        header.className="timeline-header";
-        header.style.width=this.timelineWidth()+"px";
+    let current = new Date(
+        this.minDate.getFullYear(),
+        this.minDate.getMonth(),
+        1
+    );
 
-        const months=[
-            "Jan","Fév","Mar","Avr","Mai","Juin",
-            "Juil","Août","Sept","Oct","Nov","Déc"
-        ];
+    const months = [
+        "Jan","Fév","Mar","Avr","Mai","Juin",
+        "Juil","Août","Sept","Oct","Nov","Déc"
+    ];
 
-        let current=new Date(
-            this.minDate.getFullYear(),
-            this.minDate.getMonth(),
-            1
-        );
+    while(current <= this.maxDate){
 
-        while(current<=this.maxDate){
+        const start = new Date(current);
 
-            const x=this.dateToX(current);
+        const end = new Date(current);
+        end.setMonth(end.getMonth()+1);
 
-            const month=document.createElement("div");
+        const cell = document.createElement("div");
+        cell.className = "timeline-month";
 
-            month.className="timeline-month";
+        cell.style.left = this.dateToX(start) + "px";
+        cell.style.width =
+            (this.dateToX(end)-this.dateToX(start)) + "px";
 
-            month.style.left=x+"px";
+        cell.innerHTML =
+            `${months[start.getMonth()]} ${start.getFullYear()}`;
 
-            month.innerHTML=
-                `<strong>${months[current.getMonth()]}</strong><br>${current.getFullYear()}`;
+        header.appendChild(cell);
 
-            header.appendChild(month);
-
-            current.setMonth(current.getMonth()+1);
-
-        }
-
-        right.appendChild(header);
+        current.setMonth(current.getMonth()+1);
 
     }
+
+    header.style.width = this.timelineWidth()+"px";
+
+    right.appendChild(header);
+
+}
 
     /*
     ==========================================
