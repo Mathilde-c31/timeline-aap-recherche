@@ -329,6 +329,8 @@ footer {
 
 .timeline-header{
 
+    flex:0 0 40px;
+
     position:relative;
 
     height:40px;
@@ -409,11 +411,15 @@ footer {
 
 .timeline-right{
 
+     flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
     position:relative;
-
-    flex:1;
-
-    overflow:auto;
 
 }
 
