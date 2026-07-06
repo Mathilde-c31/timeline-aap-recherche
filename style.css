@@ -341,27 +341,15 @@ footer {
 
    position:absolute;
 
-    top:0;
-
-    height:40px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    border-right:1px solid #e5e5e5;
-
     font-size:12px;
 
     font-weight:600;
 
-    color:#555;
+    color:#444;
 
     white-space:nowrap;
 
-    box-sizing:border-box;
+    transform:translateX(-50%);
 
 }
 
