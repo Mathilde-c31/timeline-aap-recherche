@@ -215,6 +215,8 @@ return {
 
     header.style.width = this.timelineWidth()+"px";
 
+     header.style.position = "relative";
+
     right.appendChild(header);
 
 }
