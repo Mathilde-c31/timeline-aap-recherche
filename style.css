@@ -243,11 +243,15 @@ footer {
 
 .timeline-right{
 
-    position: relative;
+     flex:1;
 
-    flex:1;
+    display:flex;
 
-    overflow:auto;
+    flex-direction:column;
+
+    overflow:hidden;
+
+    position:relative;
 
 }
 
@@ -373,13 +377,15 @@ footer {
 
 .timeline-header{
 
+       flex:0 0 40px;
+
     position:relative;
 
-    height:48px;
+    background:#fafafa;
 
-    border-bottom:2px solid #ddd;
+    border-bottom:1px solid #dcdcdc;
 
-    background:white;
+    overflow:hidden;
 
 }
 
@@ -477,10 +483,10 @@ footer {
 
 .timeline-body{
 
+      flex:1;
+
     position:relative;
 
-    width:max-content;
-
-    min-height:100%;
+    overflow:auto;
 
 }
