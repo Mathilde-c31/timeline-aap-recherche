@@ -176,8 +176,17 @@ return {
 
     renderHeader(right){
 
-    const header = document.createElement("div");
+      const header = document.createElement("div");
     header.className = "timeline-header";
+
+    header.style.position = "relative";
+    header.style.width = this.timelineWidth() + "px";
+    header.style.height = "40px";
+
+    const months = [
+        "Jan","Fév","Mar","Avr","Mai","Juin",
+        "Juil","Août","Sept","Oct","Nov","Déc"
+    ];
 
     let current = new Date(
         this.minDate.getFullYear(),
@@ -185,37 +194,27 @@ return {
         1
     );
 
-    const months = [
-        "Jan","Fév","Mar","Avr","Mai","Juin",
-        "Juil","Août","Sept","Oct","Nov","Déc"
-    ];
-
     while(current <= this.maxDate){
 
-        const start = new Date(current);
+        const month = document.createElement("div");
+        month.className = "timeline-month";
 
-        const end = new Date(current);
-        end.setMonth(end.getMonth()+1);
+        month.style.position = "absolute";
+        month.style.left = this.dateToX(current) + "px";
+        month.style.top = "10px";
 
-        const cell = document.createElement("div");
-        cell.className = "timeline-month";
+        month.textContent =
+            months[current.getMonth()] + " " + current.getFullYear();
 
-        cell.style.left = this.dateToX(start) + "px";
-        cell.style.width =
-            (this.dateToX(end)-this.dateToX(start)) + "px";
+        header.appendChild(month);
 
-        cell.innerHTML =
-            `${months[start.getMonth()]} ${start.getFullYear()}`;
-
-        header.appendChild(cell);
-
-        current.setMonth(current.getMonth()+1);
+        current = new Date(
+            current.getFullYear(),
+            current.getMonth() + 1,
+            1
+        );
 
     }
-
-    header.style.width = this.timelineWidth()+"px";
-
-     header.style.position = "relative";
 
     right.appendChild(header);
 
