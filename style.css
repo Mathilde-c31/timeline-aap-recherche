@@ -1,269 +1,221 @@
 /* ==========================================================
    Timeline AAP Recherche
-   Version 0.1
-   ========================================================== */
+   Style V1.0
+========================================================== */
 
-* {
-  box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
 html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+body{
+
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f5f7fa;
-  color: #2c3e50;
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fa;
+    color:#2c3e50;
+
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+#app{
+
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+
 }
 
 /* ==========================================================
    En-tête
-   ========================================================== */
+========================================================== */
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+header{
 
-  padding: 18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-  background: white;
+    padding:18px 24px;
 
-  border-bottom: 1px solid #d9d9d9;
+    background:#fff;
 
-  box-shadow: 0 2px 5px rgba(0,0,0,.05);
+    border-bottom:1px solid #d9d9d9;
+
+    box-shadow:0 2px 5px rgba(0,0,0,.05);
+
 }
 
-.title h1 {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 600;
+.title h1{
+
+    margin:0;
+    font-size:26px;
+    font-weight:600;
+
 }
 
-.title p {
-  margin: 6px 0 0 0;
-  color: #777;
-  font-size: 14px;
+.title p{
+
+    margin:6px 0 0;
+    font-size:14px;
+    color:#777;
+
 }
 
 /* ==========================================================
    Barre d'outils
-   ========================================================== */
+========================================================== */
 
-.toolbar {
+.toolbar{
 
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
 
 }
 
-.toolbar input {
+.toolbar input{
 
-  width: 260px;
+    width:260px;
 
-  padding: 9px 12px;
+    padding:9px 12px;
 
-  border-radius: 6px;
+    border:1px solid #ccc;
+    border-radius:6px;
 
-  border: 1px solid #cfcfcf;
-
-  font-size: 14px;
-
-}
-
-.toolbar input:focus {
-
-  outline: none;
-
-  border-color: #1976d2;
+    font-size:14px;
 
 }
 
-.toolbar button {
+.toolbar input:focus{
 
-  padding: 10px 16px;
+    outline:none;
 
-  border: none;
-
-  border-radius: 6px;
-
-  background: #1976d2;
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 14px;
+    border-color:#1976d2;
 
 }
 
-.toolbar button:hover {
+.toolbar button{
 
-  background: #1565c0;
+    padding:10px 16px;
+
+    border:none;
+    border-radius:6px;
+
+    background:#1976d2;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.toolbar button:hover{
+
+    background:#1565c0;
 
 }
 
 /* ==========================================================
    Zone principale
-   ========================================================== */
+========================================================== */
 
-main {
+main{
 
-  flex: 1;
+    flex:1;
 
-  position: relative;
+    position:relative;
 
-  overflow: hidden;
+    overflow:hidden;
 
-}
-
-/* ==========================================================
-   Message de chargement
-   ========================================================== */
-
-#loading {
-
-  position: absolute;
-
-  inset: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 18px;
-
-  color: #666;
-
-  background: white;
-
-  z-index: 20;
+    background:#fff;
 
 }
 
-/* ==========================================================
-   Timeline
-   ========================================================== */
+#loading{
 
-#timeline {
+    position:absolute;
 
-  width: 100%;
+    inset:0;
 
-  height: 100%;
-
-  background: white;
-
-}
-
-/* ==========================================================
-   Pied de page
-   ========================================================== */
-
-footer {
-
-  padding: 10px;
-
-  text-align: center;
-
-  font-size: 12px;
-
-  color: #888;
-
-  border-top: 1px solid #ddd;
-
-  background: white;
-
-}
-
-/* ==========================================================
-   Responsive
-   ========================================================== */
-
-@media (max-width: 900px) {
-
-  header {
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 15px;
-
-  }
-
-  .toolbar {
-
-    width: 100%;
-
-  }
-
-  .toolbar input {
-
-    flex: 1;
-
-    width: auto;
-
-  }
-
-}
-
-.timeline-wrapper{
     display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#fff;
+
+    font-size:18px;
+
+    color:#666;
+
+    z-index:1000;
+
+}
+
+#timeline{
+
     width:100%;
     height:100%;
+
 }
+
+/* ==========================================================
+   Structure de la timeline
+========================================================== */
+
+.timeline-wrapper{
+
+    display:flex;
+
+    width:100%;
+    height:100%;
+
+}
+
+/* ==========================================================
+   Colonne de gauche
+========================================================== */
 
 .timeline-left{
 
     width:320px;
 
-    border-right:1px solid #ddd;
+    flex-shrink:0;
+
+    display:flex;
+    flex-direction:column;
 
     background:#fafafa;
 
-    flex-shrink:0;
-
-}
-
-.timeline-right{
-
-     flex:1;
-
-    display:flex;
-
-    flex-direction:column;
+    border-right:1px solid #dddddd;
 
     overflow:hidden;
-
-    position:relative;
 
 }
 
 .timeline-label{
 
-    height:34px;
+    display:flex;
 
-    line-height:34px;
+    align-items:center;
 
-    padding:0 10px;
+    height:38px;
 
-    border-bottom:1px solid #eee;
+    padding:0 12px;
+
+    border-bottom:1px solid #eeeeee;
+
+    font-size:14px;
 
     white-space:nowrap;
 
@@ -271,147 +223,25 @@ footer {
 
     text-overflow:ellipsis;
 
-    font-size:14px;
-
 }
 
 .financeur{
 
-    color:#666;
-
-    font-size:0.9em;
+    color:#666666;
 
     font-weight:400;
 
-}
-
-.timeline-row{
-
-    height:34px;
-
-    border-bottom:1px solid #eee;
+    font-size:.92em;
 
 }
 
-.timeline-row{
-
-    position:relative;
-
-    height:34px;
-
-    border-bottom:1px solid #eee;
-
-}
-
-.timeline-bar{
-
-    position:absolute;
-
-    top:7px;
-
-    height:20px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    transition:0.2s;
-
-}
-
-.timeline-bar:hover{
-
-    transform:scaleY(1.15);
-
-    filter:brightness(1.05);
-
-}
-
-.timeline-header{
-
-    flex:0 0 40px;
-
-    position:relative;
-
-    height:40px;
-
-    border-bottom:1px solid #d9d9d9;
-
-    background:#fafafa;
-
-    overflow:hidden;
-
-}
-
-.timeline-month{
-
-   position:absolute;
-
-    font-size:12px;
-
-    font-weight:600;
-
-    color:#444;
-
-    white-space:nowrap;
-
-    transform:translateX(-50%);
-
-}
-
-.today-line{
-
-    position:absolute;
-
-    top:48px;
-
-    bottom:0;
-
-    width:2px;
-
-    background:#d32f2f;
-
-    pointer-events:none;
-
-    z-index:100;
-
-}
-
-.timeline-header{
-
-       flex:0 0 40px;
-
-    position:relative;
-
-    background:#fafafa;
-
-    border-bottom:1px solid #dcdcdc;
-
-    overflow:hidden;
-
-}
-
-.timeline-month{
-
-    position:absolute;
-
-    top:4px;
-
-    transform:translateX(-50%);
-
-    text-align:center;
-
-    font-size:12px;
-
-    color:#555;
-
-    white-space:nowrap;
-
-}
+/* ==========================================================
+   Colonne de droite
+========================================================== */
 
 .timeline-right{
 
-     flex:1;
+    flex:1;
 
     display:flex;
 
@@ -421,13 +251,113 @@ footer {
 
     position:relative;
 
+    background:white;
+
 }
+
+/* ==========================================================
+   Corps de la timeline
+========================================================== */
+
+.timeline-body{
+
+    flex:1;
+
+    position:relative;
+
+    overflow:auto;
+
+    background:white;
+
+}
+
+/* ==========================================================
+   Axe des mois
+========================================================== */
+
+.timeline-header{
+
+    flex:0 0 42px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#fafafa;
+
+    border-bottom:1px solid #d9d9d9;
+
+}
+
+.timeline-month{
+
+    position:absolute;
+
+    top:10px;
+
+    transform:translateX(-50%);
+
+    white-space:nowrap;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    color:#555;
+
+}
+
+/* ==========================================================
+   Lignes des AAP
+========================================================== */
+
+.timeline-row{
+
+    position:relative;
+
+    height:38px;
+
+    border-bottom:1px solid #eeeeee;
+
+}
+
+/* ==========================================================
+   Barres
+========================================================== */
+
+.timeline-bar{
+
+    position:absolute;
+
+    top:9px;
+
+    height:20px;
+
+    border-radius:10px;
+
+    transition:
+        transform .15s ease,
+        filter .15s ease;
+
+}
+
+.timeline-bar:hover{
+
+    transform:scaleY(1.10);
+
+    filter:brightness(1.08);
+
+}
+
+/* ==========================================================
+   Grille mensuelle
+========================================================== */
 
 .timeline-grid-line{
 
     position:absolute;
 
-    top:48px;
+    top:0;
 
     bottom:0;
 
@@ -439,41 +369,15 @@ footer {
 
 }
 
-.timeline-row{
-
-    position:relative;
-
-    height:34px;
-
-    border-bottom:1px solid #eee;
-
-}
-
-.timeline-bar{
-
-    position:absolute;
-
-    top:7px;
-
-    height:20px;
-
-    border-radius:10px;
-
-    transition:.2s;
-
-}
-
-.timeline-bar:hover{
-
-    filter:brightness(1.1);
-
-}
+/* ==========================================================
+   Ligne Aujourd'hui
+========================================================== */
 
 .today-line{
 
     position:absolute;
 
-    top:48px;
+    top:0;
 
     bottom:0;
 
@@ -481,18 +385,96 @@ footer {
 
     background:#d32f2f;
 
-    z-index:100;
-
     pointer-events:none;
 
 }
 
-.timeline-body{
+/* ==========================================================
+   Couches de la timeline
+========================================================== */
 
-      flex:1;
+.timeline-grid-layer,
+.timeline-today-layer,
+.timeline-rows-layer{
 
-    position:relative;
+    position:absolute;
 
-    overflow:auto;
+    inset:0;
+
+}
+
+.timeline-grid-layer{
+
+    z-index:1;
+
+}
+
+.timeline-today-layer{
+
+    z-index:2;
+
+}
+
+.timeline-rows-layer{
+
+    z-index:3;
+
+}
+
+/* ==========================================================
+   Pied de page
+========================================================== */
+
+footer{
+
+    padding:10px;
+
+    text-align:center;
+
+    font-size:12px;
+
+    color:#888;
+
+    background:#ffffff;
+
+    border-top:1px solid #dddddd;
+
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width:900px){
+
+    header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .toolbar{
+
+        width:100%;
+
+    }
+
+    .toolbar input{
+
+        flex:1;
+
+        width:auto;
+
+    }
+
+    .timeline-left{
+
+        width:260px;
+
+    }
 
 }
