@@ -327,21 +327,23 @@ footer {
 
     position:relative;
 
-    height:48px;
+    height:40px;
 
-    border-bottom:2px solid #ddd;
+    border-bottom:1px solid #d9d9d9;
 
-    background:white;
+    background:#fafafa;
+
+    overflow:hidden;
 
 }
 
 .timeline-month{
 
-    position:absolute;
+   position:absolute;
 
     top:0;
 
-    bottom:0;
+    height:40px;
 
     display:flex;
 
@@ -349,13 +351,15 @@ footer {
 
     justify-content:center;
 
-    border-right:1px solid #ddd;
+    border-right:1px solid #e5e5e5;
 
     font-size:12px;
 
     font-weight:600;
 
     color:#555;
+
+    white-space:nowrap;
 
     box-sizing:border-box;
 
