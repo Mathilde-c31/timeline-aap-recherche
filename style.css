@@ -295,11 +295,21 @@ main{
 
 }
 
+.timeline-header-content{
+
+    position:relative;
+
+    height:100%;
+
+    will-change:transform;
+
+}
+
 .timeline-month{
 
     position:absolute;
 
-    top:10px;
+    top:11px;
 
     transform:translateX(-50%);
 
@@ -310,6 +320,8 @@ main{
     font-weight:600;
 
     color:#555;
+   
+   line-height:20px;
 
 }
 
