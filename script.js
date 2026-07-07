@@ -2,11 +2,11 @@
 ==========================================================
  Timeline AAP Recherche
  script.js
- Version 1.1
+ Version 2.0
 ==========================================================
 */
 
-class TimelineAAP{
+class TimelineAAP {
 
     constructor(){
 
@@ -16,22 +16,22 @@ class TimelineAAP{
         this.loading =
             document.getElementById("loading");
 
-        this.records=[];
+        this.records = [];
 
-        this.minDate=null;
-        this.maxDate=null;
+        this.minDate = null;
+        this.maxDate = null;
 
         /* Dimensions */
 
-        this.leftWidth=320;
+        this.leftWidth = 320;
+        this.headerHeight = 42;
+        this.rowHeight = 38;
 
-        this.headerHeight=42;
+        /* Échelle */
 
-        this.rowHeight=38;
+        this.pixelsPerDay = 4;
 
-        this.pixelsPerDay=4;
-
-        this.today=new Date();
+        this.today = new Date();
 
     }
 
@@ -43,16 +43,14 @@ class TimelineAAP{
 
     load(records){
 
-        this.records=records.filter(r=>
-
+        this.records = records.filter(r =>
             r.ouverture1 &&
             r.fermeture1
-
         );
 
-        if(this.records.length===0){
+        if(this.records.length === 0){
 
-            this.container.innerHTML=
+            this.container.innerHTML =
                 "<p>Aucune donnée.</p>";
 
             return;
@@ -67,13 +65,13 @@ class TimelineAAP{
 
     /*
     ==========================================
-    Bornes
+    Calcul des bornes
     ==========================================
     */
 
     computeBounds(){
 
-        const dates=[];
+        const dates = [];
 
         this.records.forEach(record=>{
 
@@ -88,25 +86,25 @@ class TimelineAAP{
 
         });
 
-        this.minDate=new Date(
+        this.minDate = new Date(
             Math.min(...dates)
         );
 
-        this.maxDate=new Date(
+        this.maxDate = new Date(
             Math.max(...dates)
         );
 
         this.minDate.setDate(
-            this.minDate.getDate()-15
+            this.minDate.getDate() - 15
         );
 
         this.maxDate.setDate(
-            this.maxDate.getDate()+15
+            this.maxDate.getDate() + 15
         );
 
     }
 
-      /*
+    /*
     ==========================================
     Outils
     ==========================================
@@ -114,21 +112,21 @@ class TimelineAAP{
 
     dateToX(date){
 
-        const oneDay = 1000 * 60 * 60 * 24;
+        const day = 86400000;
 
         return (
-            (date - this.minDate) / oneDay
+            (date - this.minDate) / day
         ) * this.pixelsPerDay;
 
     }
 
     duration(start,end){
 
-        const oneDay = 1000 * 60 * 60 * 24;
+        const day = 86400000;
 
         return Math.max(
 
-            ((end-start)/oneDay)
+            ((end-start)/day)
             * this.pixelsPerDay,
 
             4
@@ -141,7 +139,14 @@ class TimelineAAP{
 
         return this.dateToX(
             this.maxDate
-        ) + 80;
+        ) + 100;
+
+    }
+
+    timelineHeight(){
+
+        return this.records.length
+            * this.rowHeight;
 
     }
 
@@ -165,39 +170,83 @@ class TimelineAAP{
 
     createLayout(){
 
-        const wrapper = document.createElement("div");
-        wrapper.className = "timeline-wrapper";
+        const wrapper =
+            document.createElement("div");
 
-        const left = document.createElement("div");
-        left.className = "timeline-left";
+        wrapper.className =
+            "timeline-wrapper";
 
-        const right = document.createElement("div");
-        right.className = "timeline-right";
+        /* Colonne gauche */
 
-        /* En-tête fixe */
+        const left =
+            document.createElement("div");
 
-        const header = document.createElement("div");
-        header.className = "timeline-header";
+        left.className =
+            "timeline-left";
 
-        /* Corps scrollable */
+        /* Colonne droite */
 
-        const body = document.createElement("div");
-        body.className = "timeline-body";
+        const right =
+            document.createElement("div");
 
-        /* Les trois couches */
+        right.className =
+            "timeline-right";
 
-        const gridLayer = document.createElement("div");
-        gridLayer.className = "timeline-grid-layer";
+        /* En-tête */
 
-        const todayLayer = document.createElement("div");
-        todayLayer.className = "timeline-today-layer";
+        const header =
+            document.createElement("div");
 
-        const rowsLayer = document.createElement("div");
-        rowsLayer.className = "timeline-rows-layer";
+        header.className =
+            "timeline-header";
 
-        body.appendChild(gridLayer);
-        body.appendChild(todayLayer);
-        body.appendChild(rowsLayer);
+        /* Zone scrollable */
+
+        const body =
+            document.createElement("div");
+
+        body.className =
+            "timeline-body";
+
+        /* Conteneur de toute la timeline */
+
+        const canvas =
+            document.createElement("div");
+
+        canvas.className =
+            "timeline-canvas";
+
+        canvas.style.width =
+            this.timelineWidth() + "px";
+
+        canvas.style.height =
+            this.timelineHeight() + "px";
+
+        /* Les couches */
+
+        const gridLayer =
+            document.createElement("div");
+
+        gridLayer.className =
+            "timeline-grid-layer";
+
+        const todayLayer =
+            document.createElement("div");
+
+        todayLayer.className =
+            "timeline-today-layer";
+
+        const rowsLayer =
+            document.createElement("div");
+
+        rowsLayer.className =
+            "timeline-rows-layer";
+
+        canvas.appendChild(gridLayer);
+        canvas.appendChild(todayLayer);
+        canvas.appendChild(rowsLayer);
+
+        body.appendChild(canvas);
 
         right.appendChild(header);
         right.appendChild(body);
@@ -210,8 +259,12 @@ class TimelineAAP{
         return{
 
             left,
+            right,
+
             header,
             body,
+
+            canvas,
 
             gridLayer,
             todayLayer,
@@ -221,7 +274,7 @@ class TimelineAAP{
 
     }
 
-/*
+   /*
 ==========================================
 Libellés de gauche
 ==========================================
@@ -232,12 +285,14 @@ createLabel(record){
     const label = document.createElement("div");
 
     label.className = "timeline-label";
+    label.style.height = this.rowHeight + "px";
 
-    label.innerHTML =
-        `<strong>${record.nom}</strong>
-         <span class="financeur">
+    label.innerHTML = `
+        <strong>${record.nom}</strong>
+        <span class="financeur">
             — ${record.financeur}
-         </span>`;
+        </span>
+    `;
 
     return label;
 
@@ -263,45 +318,47 @@ Axe des mois
 
 createMonth(date){
 
-    const months = [
+    const months=[
         "Jan","Fév","Mar","Avr","Mai","Juin",
         "Juil","Août","Sept","Oct","Nov","Déc"
     ];
 
-    const month = document.createElement("div");
+    const div=document.createElement("div");
 
-    month.className = "timeline-month";
+    div.className="timeline-month";
 
-    month.textContent =
+    div.textContent=
         months[date.getMonth()] +
         " " +
         date.getFullYear();
 
-    month.style.left =
-        this.dateToX(date) + "px";
+    div.style.left=
+        this.dateToX(date)+"px";
 
-    return month;
+    return div;
 
 }
 
 renderHeader(header){
 
-    header.style.width =
-        this.timelineWidth() + "px";
+    header.innerHTML="";
 
-    let current = new Date(
+    header.style.width=
+        this.timelineWidth()+"px";
+
+    let current=new Date(
         this.minDate.getFullYear(),
         this.minDate.getMonth(),
         1
     );
 
-    while(current <= this.maxDate){
+    while(current<=this.maxDate){
 
         header.appendChild(
             this.createMonth(current)
         );
 
-        current = new Date(
+        current=new Date(
             current.getFullYear(),
             current.getMonth()+1,
             1
@@ -313,35 +370,34 @@ renderHeader(header){
 
 /*
 ==========================================
-Barres des AAP
+Création d'une barre
 ==========================================
 */
 
 createBar(record){
 
-    const bar = document.createElement("div");
+    const bar=document.createElement("div");
 
-    bar.className = "timeline-bar";
+    bar.className="timeline-bar";
 
-    bar.style.left =
-        this.dateToX(record.ouverture1) + "px";
+    bar.style.left=
+        this.dateToX(record.ouverture1)+"px";
 
-    bar.style.width =
+    bar.style.width=
         this.duration(
             record.ouverture1,
             record.fermeture1
-        ) + "px";
+        )+"px";
 
-    bar.style.background =
+    bar.style.background=
         record.couleur;
 
-    bar.title = record.nom;
+    bar.title=
+        record.nom;
 
     if(record.lien){
 
-        bar.style.cursor = "pointer";
-
-        bar.onclick = ()=>{
+        bar.onclick=()=>{
 
             window.open(
                 record.lien,
@@ -356,14 +412,23 @@ createBar(record){
 
 }
 
+/*
+==========================================
+Création d'une ligne
+==========================================
+*/
+
 createRow(record){
 
-    const row = document.createElement("div");
+    const row=document.createElement("div");
 
-    row.className = "timeline-row";
+    row.className="timeline-row";
 
-    row.style.width =
-        this.timelineWidth() + "px";
+    row.style.height=
+        this.rowHeight+"px";
+
+    row.style.width=
+        this.timelineWidth()+"px";
 
     row.appendChild(
         this.createBar(record)
@@ -375,17 +440,27 @@ createRow(record){
 
 renderRows(rowsLayer){
 
+    rowsLayer.innerHTML="";
+
+    rowsLayer.style.width=
+        this.timelineWidth()+"px";
+
+    rowsLayer.style.height=
+        this.timelineHeight()+"px";
+
     this.records.forEach(record=>{
 
         rowsLayer.appendChild(
+
             this.createRow(record)
+
         );
 
     });
 
 }
 
- /*
+/*
 ==========================================
 Grille mensuelle
 ==========================================
@@ -393,11 +468,13 @@ Grille mensuelle
 
 renderGrid(gridLayer){
 
+    gridLayer.innerHTML = "";
+
     gridLayer.style.width =
         this.timelineWidth() + "px";
 
     gridLayer.style.height =
-        (this.records.length * this.rowHeight) + "px";
+        this.timelineHeight() + "px";
 
     let current = new Date(
         this.minDate.getFullYear(),
@@ -418,7 +495,7 @@ renderGrid(gridLayer){
 
         current = new Date(
             current.getFullYear(),
-            current.getMonth() + 1,
+            current.getMonth()+1,
             1
         );
 
@@ -428,26 +505,45 @@ renderGrid(gridLayer){
 
 /*
 ==========================================
-Ligne Aujourd'hui
+Aujourd'hui
 ==========================================
 */
 
 renderToday(todayLayer){
 
+    todayLayer.innerHTML = "";
+
     todayLayer.style.width =
         this.timelineWidth() + "px";
 
     todayLayer.style.height =
-        (this.records.length * this.rowHeight) + "px";
+        this.timelineHeight() + "px";
 
     const line = document.createElement("div");
 
     line.className = "today-line";
 
     line.style.left =
-        this.dateToX(new Date()) + "px";
+        this.dateToX(this.today) + "px";
 
     todayLayer.appendChild(line);
+
+}
+
+/*
+==========================================
+Synchronisation du scroll
+==========================================
+*/
+
+bindScroll(layout){
+
+    layout.body.addEventListener("scroll", ()=>{
+
+        layout.header.scrollLeft =
+            layout.body.scrollLeft;
+
+    });
 
 }
 
@@ -463,11 +559,12 @@ render(){
 
     if(this.loading){
 
-        this.loading.style.display = "none";
+        this.loading.style.display="none";
 
     }
 
-    const layout = this.createLayout();
+    const layout =
+        this.createLayout();
 
     this.renderLabels(layout.left);
 
@@ -479,7 +576,9 @@ render(){
 
     this.renderToday(layout.todayLayer);
 
-    console.log("Timeline V1.1 prête");
+    this.bindScroll(layout);
+
+    console.log("Timeline V2 prête");
 
 }
 
