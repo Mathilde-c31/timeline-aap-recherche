@@ -200,6 +200,12 @@ class TimelineAAP {
         header.className =
             "timeline-header";
 
+     const headerContent =
+    document.createElement("div");
+
+headerContent.className =
+    "timeline-header-content";
+
      header.appendChild(headerContent);
 
         /* Zone scrollable */
