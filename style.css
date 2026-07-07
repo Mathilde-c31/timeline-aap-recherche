@@ -269,6 +269,8 @@ main{
 
     background:white;
 
+    margin-top:0;
+
 }
 
 /* ==========================================================
@@ -279,6 +281,8 @@ main{
 
     flex:0 0 42px;
 
+    height:42px;
+
     position:relative;
 
     overflow:hidden;
@@ -286,6 +290,8 @@ main{
     background:#fafafa;
 
     border-bottom:1px solid #d9d9d9;
+
+    z-index:20;
 
 }
 
@@ -476,5 +482,12 @@ footer{
         width:260px;
 
     }
+
+}
+
+.timeline-header,
+.timeline-body{
+
+    flex-shrink:0;
 
 }
