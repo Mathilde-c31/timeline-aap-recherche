@@ -184,6 +184,8 @@ class TimelineAAP {
         left.className =
             "timeline-left";
 
+     /* Coin vide */
+
      const leftHeader = document.createElement("div");
 
 leftHeader.className = "timeline-left-header";
