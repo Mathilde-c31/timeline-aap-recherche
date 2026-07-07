@@ -200,6 +200,8 @@ class TimelineAAP {
         header.className =
             "timeline-header";
 
+     header.appendChild(headerContent);
+
         /* Zone scrollable */
 
         const body =
@@ -256,21 +258,23 @@ class TimelineAAP {
 
         this.container.appendChild(wrapper);
 
-        return{
+       return{
 
-            left,
-            right,
+    left,
 
-            header,
-            body,
+    header,
 
-            canvas,
+    headerContent,
 
-            gridLayer,
-            todayLayer,
-            rowsLayer
+    body,
 
-        };
+    gridLayer,
+
+    todayLayer,
+
+    rowsLayer
+
+};
 
     }
 
