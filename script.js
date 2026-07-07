@@ -343,26 +343,31 @@ createMonth(date){
 
 }
 
-renderHeader(header){
+renderHeader(headerContent){
 
-    header.innerHTML="";
+    headerContent.innerHTML = "";
 
-    header.style.width=
-        this.timelineWidth()+"px";
+    headerContent.style.position = "relative";
 
-    let current=new Date(
+    headerContent.style.width =
+        this.timelineWidth() + "px";
+
+    headerContent.style.height =
+        this.headerHeight + "px";
+
+    let current = new Date(
         this.minDate.getFullYear(),
         this.minDate.getMonth(),
         1
     );
 
-    while(current<=this.maxDate){
+    while(current <= this.maxDate){
 
-        header.appendChild(
+        headerContent.appendChild(
             this.createMonth(current)
         );
 
-        current=new Date(
+        current = new Date(
             current.getFullYear(),
             current.getMonth()+1,
             1
@@ -544,8 +549,8 @@ bindScroll(layout){
 
     layout.body.addEventListener("scroll", ()=>{
 
-        layout.header.scrollLeft =
-            layout.body.scrollLeft;
+        layout.headerContent.style.transform =
+            `translateX(${-layout.body.scrollLeft}px)`;
 
     });
 
@@ -572,7 +577,7 @@ render(){
 
     this.renderLabels(layout.left);
 
-    this.renderHeader(layout.header);
+   this.renderHeader(layout.headerContent);
 
     this.renderGrid(layout.gridLayer);
 
