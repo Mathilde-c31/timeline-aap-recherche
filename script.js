@@ -184,6 +184,12 @@ class TimelineAAP {
         left.className =
             "timeline-left";
 
+     const leftHeader = document.createElement("div");
+
+leftHeader.className = "timeline-left-header";
+
+left.appendChild(leftHeader);
+
         /* Colonne droite */
 
         const right =
@@ -266,18 +272,17 @@ headerContent.className =
 
        return{
 
-    left,
+ left,
+    leftHeader,
 
     header,
-
     headerContent,
 
     body,
+    canvas,
 
     gridLayer,
-
     todayLayer,
-
     rowsLayer
 
 };
