@@ -593,6 +593,10 @@ render(){
 
     this.bindScroll(layout);
 
+  console.log(layout);
+
+    console.log(this.records.length);
+
     console.log("Timeline V2 prête");
 
 }
