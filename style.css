@@ -279,11 +279,11 @@ main{
 
 .timeline-header{
 
+     position:relative;
+
     flex:0 0 42px;
 
     height:42px;
-
-    position:relative;
 
     overflow:hidden;
 
@@ -291,17 +291,18 @@ main{
 
     border-bottom:1px solid #d9d9d9;
 
-    z-index:20;
 
 }
 
 .timeline-header-content{
 
-    position:relative;
+     position:absolute;
 
-    height:100%;
+    top:0;
 
-    will-change:transform;
+    left:0;
+
+    height:42px;
 
 }
 
