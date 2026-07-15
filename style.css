@@ -516,3 +516,21 @@ footer{
     flex-shrink:0;
 
 }
+
+/* ==========================================================
+   Drag de la timeline
+========================================================== */
+
+.timeline-body{
+
+    cursor: grab;
+
+}
+
+.timeline-body.dragging{
+
+    cursor: grabbing;
+
+    user-select: none;
+
+}
