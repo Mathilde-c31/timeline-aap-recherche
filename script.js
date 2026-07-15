@@ -570,6 +570,10 @@ createBar(record){
 
     }
 
+ return container;
+
+}
+
  
 
 /*
