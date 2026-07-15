@@ -658,6 +658,8 @@ render(){
 
     this.bindScroll(layout);
 
+ this.enableDrag(layout);
+
   console.log(layout);
 
     console.log(this.records.length);
