@@ -32,6 +32,16 @@ class TimelineAAP {
         this.pixelsPerDay = 4;
 
         this.today = new Date();
+     
+     /* Drag horizontal */
+
+this.isDragging = false;
+
+this.dragStartX = 0;
+this.dragStartY = 0;
+
+this.scrollLeftStart = 0;
+this.scrollTopStart = 0;
 
     }
 
@@ -564,6 +574,52 @@ bindScroll(layout){
 
         layout.headerContent.style.transform =
             `translateX(${-layout.body.scrollLeft}px)`;
+
+    });
+
+}
+
+ /*
+==========================================
+Déplacement par glisser-déposer
+==========================================
+*/
+
+enableDrag(layout){
+
+    const body = layout.body;
+
+    body.addEventListener("mousedown",(e)=>{
+
+        this.isDragging = true;
+
+        body.classList.add("dragging");
+
+        this.dragStartX = e.clientX;
+        this.dragStartY = e.clientY;
+
+        this.scrollLeftStart = body.scrollLeft;
+        this.scrollTopStart = body.scrollTop;
+
+    });
+
+    window.addEventListener("mouseup",()=>{
+
+        this.isDragging = false;
+
+        body.classList.remove("dragging");
+
+    });
+
+    body.addEventListener("mousemove",(e)=>{
+
+        if(!this.isDragging) return;
+
+        const dx = e.clientX - this.dragStartX;
+        const dy = e.clientY - this.dragStartY;
+
+        body.scrollLeft = this.scrollLeftStart - dx;
+        body.scrollTop = this.scrollTopStart - dy;
 
     });
 
