@@ -42,6 +42,7 @@ this.dragStartY = 0;
 
 this.scrollLeftStart = 0;
 this.scrollTopStart = 0;
+     this.hasDragged = false;
 
     }
 
@@ -595,6 +596,10 @@ enableDrag(layout){
 
         this.isDragging = true;
 
+     this.hasDragged = false;
+
+body.classList.add("dragging");
+
         body.classList.add("dragging");
 
         this.dragStartX = e.clientX;
@@ -618,10 +623,16 @@ enableDrag(layout){
         if(!this.isDragging) return;
 
         const dx = e.clientX - this.dragStartX;
-        const dy = e.clientY - this.dragStartY;
+const dy = e.clientY - this.dragStartY;
 
-        body.scrollLeft = this.scrollLeftStart - dx;
-        body.scrollTop = this.scrollTopStart - dy;
+if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+
+    this.hasDragged = true;
+
+}
+
+body.scrollLeft = this.scrollLeftStart - dx;
+body.scrollTop = this.scrollTopStart - dy;
 
     });
 
