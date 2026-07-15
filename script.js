@@ -464,7 +464,7 @@ Création d'une barre de période
 ==========================================
 */
 
-createPeriodBar(start, end, color){
+createPeriodBar(record, start, end, color){
 
     const bar = document.createElement("div");
 
@@ -477,6 +477,26 @@ createPeriodBar(start, end, color){
         this.duration(start, end) + "px";
 
     bar.style.background = color;
+
+    /* Tooltip */
+
+    bar.addEventListener("mouseenter",(e)=>{
+
+        this.showTooltip(this.layout, record, e);
+
+    });
+
+    bar.addEventListener("mousemove",(e)=>{
+
+        this.moveTooltip(this.layout, e);
+
+    });
+
+    bar.addEventListener("mouseleave",()=>{
+
+        this.hideTooltip(this.layout);
+
+    });
 
     return bar;
 
@@ -500,6 +520,8 @@ createBar(record){
 
         this.createPeriodBar(
 
+         record,
+
             record.ouverture1,
             record.fermeture1,
            this.getStatusColor(record)
@@ -518,6 +540,8 @@ createBar(record){
         container.appendChild(
 
             this.createPeriodBar(
+
+             record,
 
                 record.ouverture2,
                 record.fermeture2,
@@ -545,30 +569,6 @@ createBar(record){
         };
 
     }
-
- /* Tooltip */
-
-container.addEventListener("mouseenter",(e)=>{
-
-    this.showTooltip(this.layout, record, e);
-
-});
-
-container.addEventListener("mousemove",(e)=>{
-
-    this.moveTooltip(this.layout, e);
-
-});
-
-container.addEventListener("mouseleave",()=>{
-
-    this.hideTooltip(this.layout);
-
-});
-
-    return container;
-
-}
 
  
 
