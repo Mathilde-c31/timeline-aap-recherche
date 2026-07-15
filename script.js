@@ -591,6 +591,8 @@ enableDrag(layout){
 
     body.addEventListener("mousedown",(e)=>{
 
+    e.preventDefault();
+
         this.isDragging = true;
 
         body.classList.add("dragging");
