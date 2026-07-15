@@ -401,36 +401,84 @@ renderHeader(headerContent){
 
 }
 
+ /*
+==========================================
+Création d'une barre de période
+==========================================
+*/
+
+createPeriodBar(start, end, color){
+
+    const bar = document.createElement("div");
+
+    bar.className = "timeline-bar";
+
+    bar.style.left =
+        this.dateToX(start) + "px";
+
+    bar.style.width =
+        this.duration(start, end) + "px";
+
+    bar.style.background = color;
+
+    return bar;
+
+}
+
 /*
 ==========================================
-Création d'une barre
+Création des barres d'un AAP
 ==========================================
 */
 
 createBar(record){
 
-    const bar=document.createElement("div");
+    const container = document.createElement("div");
 
-    bar.className="timeline-bar";
+    container.className = "timeline-bars";
 
-    bar.style.left=
-        this.dateToX(record.ouverture1)+"px";
+    /* Première période */
 
-    bar.style.width=
-        this.duration(
+    container.appendChild(
+
+        this.createPeriodBar(
+
             record.ouverture1,
-            record.fermeture1
-        )+"px";
+            record.fermeture1,
+            record.couleur
 
-    bar.style.background=
-        record.couleur;
+        )
 
-    bar.title=
-        record.nom;
+    );
+
+    /* Deuxième période (si présente) */
+
+    if(
+        record.ouverture2 &&
+        record.fermeture2
+    ){
+
+        container.appendChild(
+
+            this.createPeriodBar(
+
+                record.ouverture2,
+                record.fermeture2,
+                record.couleur
+
+            )
+
+        );
+
+    }
+
+    /* Gestion du clic */
 
     if(record.lien){
 
-        bar.onclick=()=>{
+        container.style.cursor = "pointer";
+
+        container.onclick = ()=>{
 
             window.open(
                 record.lien,
@@ -441,9 +489,11 @@ createBar(record){
 
     }
 
-    return bar;
+    return container;
 
 }
+
+ 
 
 /*
 ==========================================
