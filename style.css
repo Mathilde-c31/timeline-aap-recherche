@@ -534,3 +534,24 @@ footer{
     user-select: none;
 
 }
+
+/* ==========================================================
+   Plusieurs périodes d'un même AAP
+========================================================== */
+
+.timeline-bars{
+
+    position:relative;
+
+    width:100%;
+    height:100%;
+
+}
+
+.timeline-bars .timeline-bar{
+
+    position:absolute;
+
+    top:9px;
+
+}
