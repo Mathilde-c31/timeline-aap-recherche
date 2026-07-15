@@ -689,6 +689,71 @@ bindScroll(layout){
 
  /*
 ==========================================
+Afficher le tooltip
+==========================================
+*/
+
+showTooltip(layout, record, event){
+
+    const tooltip = layout.tooltip;
+
+    tooltip.innerHTML = `
+        <strong>${record.nom}</strong>
+
+        <div>
+            <span class="label">Financeur :</span>
+            ${record.financeur}
+        </div>
+
+        <div>
+            <span class="label">Ouverture :</span>
+            ${record.ouverture1.toLocaleDateString("fr-FR")}
+        </div>
+
+        <div>
+            <span class="label">Fermeture :</span>
+            ${record.fermeture1.toLocaleDateString("fr-FR")}
+        </div>
+    `;
+
+    tooltip.style.display = "block";
+
+    this.moveTooltip(layout, event);
+
+}
+
+/*
+==========================================
+Déplacer le tooltip
+==========================================
+*/
+
+moveTooltip(layout, event){
+
+    const tooltip = layout.tooltip;
+
+    tooltip.style.left =
+        (event.offsetX + 18) + "px";
+
+    tooltip.style.top =
+        (event.offsetY + 18) + "px";
+
+}
+
+/*
+==========================================
+Masquer le tooltip
+==========================================
+*/
+
+hideTooltip(layout){
+
+    layout.tooltip.style.display = "none";
+
+}
+
+ /*
+==========================================
 Déplacement par glisser-déposer
 ==========================================
 */
