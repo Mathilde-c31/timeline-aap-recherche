@@ -403,6 +403,52 @@ renderHeader(headerContent){
 
  /*
 ==========================================
+Couleur selon l'état de l'AAP
+==========================================
+*/
+
+getStatusColor(record){
+
+    const today = new Date();
+
+    // Une période est actuellement ouverte ?
+
+    const period1Open =
+        today >= record.ouverture1 &&
+        today <= record.fermeture1;
+
+    const period2Open =
+        record.ouverture2 &&
+        record.fermeture2 &&
+        today >= record.ouverture2 &&
+        today <= record.fermeture2;
+
+    if(period1Open || period2Open){
+
+        return "#2e7d32";   // Vert
+
+    }
+
+    // Toutes les périodes sont terminées ?
+
+    const lastClosing = record.fermeture2
+        ? record.fermeture2
+        : record.fermeture1;
+
+    if(today > lastClosing){
+
+        return "#9e9e9e";   // Gris
+
+    }
+
+    // Sinon : appel futur
+
+    return "#1976d2";       // Bleu
+
+}
+
+ /*
+==========================================
 Création d'une barre de période
 ==========================================
 */
@@ -445,7 +491,7 @@ createBar(record){
 
             record.ouverture1,
             record.fermeture1,
-            record.couleur
+           this.getStatusColor(record)
 
         )
 
@@ -464,7 +510,7 @@ createBar(record){
 
                 record.ouverture2,
                 record.fermeture2,
-                record.couleur
+               this.getStatusColor(record)
 
             )
 
