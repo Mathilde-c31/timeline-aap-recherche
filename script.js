@@ -546,6 +546,26 @@ createBar(record){
 
     }
 
+ /* Tooltip */
+
+container.addEventListener("mouseenter",(e)=>{
+
+    this.showTooltip(this.layout, record, e);
+
+});
+
+container.addEventListener("mousemove",(e)=>{
+
+    this.moveTooltip(this.layout, e);
+
+});
+
+container.addEventListener("mouseleave",()=>{
+
+    this.hideTooltip(this.layout);
+
+});
+
     return container;
 
 }
@@ -828,6 +848,8 @@ render(){
 
     const layout =
         this.createLayout();
+
+ this.layout = layout;
 
     this.renderLabels(layout.left);
 
