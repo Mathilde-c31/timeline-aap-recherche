@@ -437,18 +437,21 @@ main{
 .timeline-grid-layer{
 
     z-index:1;
+    pointer-events:none;
 
 }
 
 .timeline-today-layer{
 
     z-index:2;
+   pointer-events:none;
 
 }
 
 .timeline-rows-layer{
 
     z-index:3;
+   pointer-events:auto;
 
 }
 
