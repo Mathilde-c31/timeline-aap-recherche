@@ -235,6 +235,16 @@ headerContent.className =
         body.className =
             "timeline-body";
 
+     /* Tooltip */
+
+const tooltip =
+    document.createElement("div");
+
+tooltip.className =
+    "timeline-tooltip";
+
+body.appendChild(tooltip);
+
         /* Conteneur de toute la timeline */
 
         const canvas =
@@ -292,6 +302,7 @@ headerContent.className =
     headerContent,
 
     body,
+    tooltip,
     canvas,
 
     gridLayer,
