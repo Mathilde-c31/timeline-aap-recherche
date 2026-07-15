@@ -555,3 +555,58 @@ footer{
     top:9px;
 
 }
+
+/* ==========================================================
+   Tooltip
+========================================================== */
+
+.timeline-tooltip{
+
+    position:absolute;
+
+    display:none;
+
+    min-width:240px;
+    max-width:320px;
+
+    padding:12px 14px;
+
+    background:#ffffff;
+
+    border:1px solid #d9d9d9;
+
+    border-radius:8px;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+
+    font-size:13px;
+
+    line-height:1.45;
+
+    color:#2c3e50;
+
+    pointer-events:none;
+
+    z-index:1000;
+
+}
+
+.timeline-tooltip strong{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:15px;
+
+    color:#1f2d3d;
+
+}
+
+.timeline-tooltip .label{
+
+    font-weight:600;
+
+    color:#666;
+
+}
