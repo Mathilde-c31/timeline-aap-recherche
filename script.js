@@ -733,6 +733,12 @@ showTooltip(layout, record, event){
 
     tooltip.style.display = "block";
 
+ console.log(
+    "Tooltip position :",
+    tooltip.style.left,
+    tooltip.style.top
+);
+
     this.moveTooltip(layout, event);
 
 }
@@ -747,11 +753,13 @@ moveTooltip(layout, event){
 
     const tooltip = layout.tooltip;
 
+    const rect = layout.body.getBoundingClientRect();
+
     tooltip.style.left =
-        (event.offsetX + 18) + "px";
+        (event.clientX - rect.left + layout.body.scrollLeft + 18) + "px";
 
     tooltip.style.top =
-        (event.offsetY + 18) + "px";
+        (event.clientY - rect.top + layout.body.scrollTop + 18) + "px";
 
 }
 
