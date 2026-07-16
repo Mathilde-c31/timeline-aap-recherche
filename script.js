@@ -480,11 +480,13 @@ createPeriodBar(record, start, end, color){
 
     /* Tooltip */
 
-    bar.addEventListener("mouseenter",(e)=>{
+ bar.addEventListener("mouseenter",(e)=>{
 
-        this.showTooltip(this.layout, record, e);
+    console.log("mouseenter :", record.nom);
 
-    });
+    this.showTooltip(this.layout, record, e);
+
+});
 
     bar.addEventListener("mousemove",(e)=>{
 
