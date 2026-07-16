@@ -721,6 +721,8 @@ Afficher le tooltip
 
 showTooltip(layout, record, event){
 
+ console.log(record);
+
     const tooltip = layout.tooltip;
 
     tooltip.innerHTML = `
