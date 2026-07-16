@@ -726,23 +726,10 @@ showTooltip(layout, record, event){
     const tooltip = layout.tooltip;
 
     tooltip.innerHTML = `
-        <strong>${record.nom}</strong>
+    <strong>${record.nom}</strong>
 
-        <div>
-            <span class="label">Financeur :</span>
-            ${record.financeur}
-        </div>
-
-        <div>
-            <span class="label">Ouverture :</span>
-            ${record.ouverture1.toLocaleDateString("fr-FR")}
-        </div>
-
-        <div>
-            <span class="label">Fermeture :</span>
-            ${record.fermeture1.toLocaleDateString("fr-FR")}
-        </div>
-    `;
+    <div>${record.financeur}</div>
+`;
 
     tooltip.style.display = "block";
 
