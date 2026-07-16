@@ -330,9 +330,11 @@ main{
 
     font-size:12px;
 
-    font-weight:600;
+     font-weight:700;
 
-    color:#555;
+    letter-spacing:.2px;
+
+    color:#5b6572;
    
    line-height:20px;
 
@@ -350,6 +352,15 @@ main{
 
     border-bottom:1px solid #eeeeee;
 
+    transition:
+        background-color .18s ease;
+
+}
+
+.timeline-row:hover{
+
+    background:#f8fbff;
+
 }
 
 /* ==========================================================
@@ -366,17 +377,25 @@ main{
 
     border-radius:10px;
 
+    cursor:pointer;
+
     transition:
         transform .15s ease,
-        filter .15s ease;
+        filter .15s ease,
+        box-shadow .15s ease;
 
 }
 
 .timeline-bar:hover{
 
-    transform:scaleY(1.10);
+    transform:scale(1.03);
 
     filter:brightness(1.08);
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.18);
+
+    z-index:20;
 
 }
 
@@ -414,7 +433,10 @@ main{
 
     width:2px;
 
-    background:#d32f2f;
+      background:#e53935;
+
+    box-shadow:
+        0 0 6px rgba(229,57,53,.35);
 
     pointer-events:none;
 
